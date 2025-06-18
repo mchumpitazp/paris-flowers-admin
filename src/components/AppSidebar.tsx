@@ -99,9 +99,7 @@ export default function AppSidebar() {
                             <Button
                                 variant="ghost"
                                 className="cursor-pointer w-full justify-start"
-                                onClick={() =>
-                                    signOut({ callbackUrl: "/login" })
-                                }
+                                onClick={() => signOut()}
                             >
                                 <LogOut className="mr-2 h-4 w-4" />
                                 Выйти
