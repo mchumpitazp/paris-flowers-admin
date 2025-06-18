@@ -33,13 +33,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             const isLoggedIn = !!auth?.user;
             const isOnLogin = nextUrl.pathname === "/login";
 
+            // If logged in and trying to access login, redirect to home
+            if (isLoggedIn && isOnLogin) {
+                return Response.redirect(new URL("/", nextUrl));
+            }
+
             // Allow access to login page when not authenticated
             if (isOnLogin) {
                 return true;
             }
 
             // Protect all other routes - require authentication
-            return isLoggedIn;
+            if (!isLoggedIn) {
+                return Response.redirect(new URL("/login", nextUrl));
+            }
+
+            return true;
         },
     },
     secret: process.env.AUTH_SECRET,
