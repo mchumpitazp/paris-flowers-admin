@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { product_images } from "@/lib/prisma/client";
 
 export async function PUT(
     request: NextRequest,
@@ -53,6 +54,20 @@ export async function PUT(
 
             // Handle product images updates (display order and primary status)
             if (body.product_images && Array.isArray(body.product_images)) {
+                // First, check if any image should be primary
+                const primaryImage = body.product_images.find(
+                    (img: product_images) => img.is_primary
+                );
+
+                if (primaryImage) {
+                    // Remove primary status from all images for this product first
+                    await tx.product_images.updateMany({
+                        where: { product_id: productId },
+                        data: { is_primary: false },
+                    });
+                }
+
+                // Then update each image with its specific data
                 for (const imageData of body.product_images) {
                     if (imageData.dbId) {
                         await tx.product_images.update({

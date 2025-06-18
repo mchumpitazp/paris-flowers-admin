@@ -34,9 +34,22 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
                 redirectTo: "/",
             });
         } catch (error) {
+            // Check if it's a CredentialsSignin error (authentication failed)
+            if (
+                error instanceof AuthError &&
+                error.type === "CredentialsSignin"
+            ) {
+                redirect(
+                    `/login?error=${encodeURIComponent(
+                        "Неверный логин или пароль"
+                    )}`
+                );
+            }
             // Only catch actual authentication errors, not redirect errors
             if (error instanceof AuthError) {
-                redirect(`/login?error=${encodeURIComponent("Неверное логин или пароль")}`);
+                redirect(
+                    `/login?error=${encodeURIComponent("Ошибка авторизации")}`
+                );
             }
             // Re-throw any other errors (like NEXT_REDIRECT for successful login)
             throw error;
