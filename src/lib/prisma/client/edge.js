@@ -203,7 +203,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/maurochumpitaz/Documents/Websites/paris-flowers/paris-flowers-admin/src/lib/prisma/client",
+      "value": "/Users/maurochumpitazpolino/Documents/Websites/paris-flowers/paris-flowers-admin/src/lib/prisma/client",
       "fromEnvVar": null
     },
     "config": {
@@ -217,7 +217,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/maurochumpitaz/Documents/Websites/paris-flowers/paris-flowers-admin/prisma/schema.prisma",
+    "sourceFilePath": "/Users/maurochumpitazpolino/Documents/Websites/paris-flowers/paris-flowers-admin/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
