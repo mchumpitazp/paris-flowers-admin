@@ -26,8 +26,6 @@ export default async function ProductEditPage({
         notFound();
     }
 
-    console.log(product);
-
     return (
         <div className="space-y-6">
             <div>

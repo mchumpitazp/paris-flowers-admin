@@ -86,13 +86,19 @@ export function ProductEditForm({
         product.product_occasions?.map((po) => po.occasion_id) || []
     );
 
+    const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>(
+        product.product_categories?.map((pc) => pc.category_id) || []
+    );
+
     const form = useForm<ProductEditFormData>({
         resolver: zodResolver(productEditSchema),
         defaultValues: {
             name: product.name || "",
             descriptionRu: product.descriptionRu || "",
             price: product.price || 0,
-            category: product.category || "",
+            category: product.category || "", // Keep for backward compatibility
+            category_ids:
+                product.product_categories?.map((pc) => pc.category_id) || [],
             status: formatJSON(product.status),
             image: formatJSON(product.image),
             occasion: product.occasion || "",
@@ -172,6 +178,22 @@ export function ProductEditForm({
         const newIds = selectedOccasionIds.filter((id) => id !== occasionId);
         form.setValue("occasion_ids", newIds);
         setSelectedOccasionIds(newIds);
+    };
+
+    const toggleCategoryId = (categoryId: number) => {
+        const currentIds = selectedCategoryIds;
+        const newIds = currentIds.includes(categoryId)
+            ? currentIds.filter((id) => id !== categoryId)
+            : [...currentIds, categoryId];
+
+        form.setValue("category_ids", newIds);
+        setSelectedCategoryIds(newIds);
+    };
+
+    const removeCategoryId = (categoryId: number) => {
+        const newIds = selectedCategoryIds.filter((id) => id !== categoryId);
+        form.setValue("category_ids", newIds);
+        setSelectedCategoryIds(newIds);
     };
 
     return (
@@ -361,35 +383,74 @@ export function ProductEditForm({
                                 />
                             </div>
 
-                            {/* Category */}
+                            {/* Categories */}
                             <FormField
                                 control={form.control}
-                                name="category"
-                                render={({ field }) => (
+                                name="category_ids"
+                                render={() => (
                                     <FormItem>
                                         <FormLabel className="h-4">
-                                            Категория
+                                            Категории
                                         </FormLabel>
-                                        <Select
-                                            onValueChange={field.onChange}
-                                            defaultValue={field.value}
-                                        >
-                                            <FormControl>
+                                        <div className="space-y-2">
+                                            <Select
+                                                onValueChange={(value) =>
+                                                    toggleCategoryId(
+                                                        parseInt(value)
+                                                    )
+                                                }
+                                            >
                                                 <SelectTrigger className="w-full cursor-pointer">
-                                                    <SelectValue placeholder="Выберите категорию" />
+                                                    <SelectValue placeholder="Выберите категории" />
                                                 </SelectTrigger>
-                                            </FormControl>
-                                            <SelectContent>
-                                                {categories.map((category) => (
-                                                    <SelectItem
-                                                        key={category.id}
-                                                        value={category.slug}
-                                                    >
-                                                        {category.label}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
+                                                <SelectContent>
+                                                    {categories.map(
+                                                        (category) => (
+                                                            <SelectItem
+                                                                key={
+                                                                    category.id
+                                                                }
+                                                                value={category.id.toString()}
+                                                            >
+                                                                {category.label}
+                                                            </SelectItem>
+                                                        )
+                                                    )}
+                                                </SelectContent>
+                                            </Select>
+                                            {selectedCategoryIds.length > 0 && (
+                                                <div className="flex flex-wrap gap-2">
+                                                    {selectedCategoryIds.map(
+                                                        (categoryId) => {
+                                                            const category =
+                                                                categories.find(
+                                                                    (c) =>
+                                                                        c.id ===
+                                                                        categoryId
+                                                                );
+
+                                                            return (
+                                                                <Badge
+                                                                    key={
+                                                                        categoryId
+                                                                    }
+                                                                    variant="secondary"
+                                                                    onClick={() =>
+                                                                        removeCategoryId(
+                                                                            categoryId
+                                                                        )
+                                                                    }
+                                                                    className="hover:line-through active:line-through cursor-pointer"
+                                                                >
+                                                                    {category?.label ||
+                                                                        category?.slug}
+                                                                </Badge>
+                                                            );
+                                                        }
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
                                         <FormMessage />
                                     </FormItem>
                                 )}

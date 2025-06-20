@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Edit, ImageIcon, Plus } from "lucide-react";
-import { getCategoryBySlug } from "@/lib/constants/categories";
 import { getAllProducts } from "./utils/queries";
 
 function formatPrice(price: number): string {
@@ -84,9 +83,9 @@ export default async function ProductsPage() {
                                     </TableHead>
                                     <TableHead>Статус</TableHead>
                                     <TableHead>Название</TableHead>
-                                    <TableHead>Категория</TableHead>
                                     <TableHead>Цена</TableHead>
-                                    <TableHead>Повод</TableHead>
+                                    <TableHead>Категории</TableHead>
+                                    <TableHead>Поводы</TableHead>
                                     <TableHead>Создан</TableHead>
                                     <TableHead className="text-right">
                                         Действия
@@ -139,22 +138,6 @@ export default async function ProductsPage() {
                                             {product.name}
                                         </TableCell>
 
-                                        {/* Category */}
-                                        <TableCell>
-                                            {product.category ? (
-                                                <Badge variant="secondary">
-                                                    {getCategoryBySlug(
-                                                        product.category
-                                                    )?.label ||
-                                                        product.category}
-                                                </Badge>
-                                            ) : (
-                                                <span className="text-muted-foreground">
-                                                    -
-                                                </span>
-                                            )}
-                                        </TableCell>
-
                                         {/* Price */}
                                         <TableCell>
                                             {product.price ? (
@@ -166,17 +149,80 @@ export default async function ProductsPage() {
                                             )}
                                         </TableCell>
 
-                                        {/* Occasion */}
+                                        {/* Categories */}
                                         <TableCell>
-                                            {product.occasion ? (
-                                                <Badge
-                                                    variant="outline"
-                                                    className="max-w-48"
-                                                >
-                                                    <span className="truncate">
-                                                        {product.occasion}
-                                                    </span>
-                                                </Badge>
+                                            {product.product_categories
+                                                ?.length > 0 ? (
+                                                <div className="flex flex-nowrap gap-1">
+                                                    {product.product_categories
+                                                        .slice(0, 2)
+                                                        .map((pc) => (
+                                                            <Badge
+                                                                key={
+                                                                    pc.category_id
+                                                                }
+                                                                variant="outline"
+                                                            >
+                                                                {
+                                                                    pc
+                                                                        .categories
+                                                                        .label
+                                                                }
+                                                            </Badge>
+                                                        ))}
+                                                    {product.product_categories
+                                                        .length > 2 && (
+                                                        <Badge
+                                                            variant="outline"
+                                                            className="text-muted-foreground"
+                                                        >
+                                                            +
+                                                            {product
+                                                                .product_categories
+                                                                .length - 2}
+                                                        </Badge>
+                                                    )}
+                                                </div>
+                                            ) : (
+                                                <span className="text-muted-foreground">
+                                                    -
+                                                </span>
+                                            )}
+                                        </TableCell>
+
+                                        {/* Occasions */}
+                                        <TableCell>
+                                            {product.product_occasions?.length >
+                                            0 ? (
+                                                <div className="flex flex-nowrap gap-1">
+                                                    {product.product_occasions
+                                                        .slice(0, 2)
+                                                        .map((po) => (
+                                                            <Badge
+                                                                key={
+                                                                    po.occasion_id
+                                                                }
+                                                                variant="outline"
+                                                            >
+                                                                {
+                                                                    po.occasions
+                                                                        .label
+                                                                }
+                                                            </Badge>
+                                                        ))}
+                                                    {product.product_occasions
+                                                        .length > 2 && (
+                                                        <Badge
+                                                            variant="outline"
+                                                            className="text-muted-foreground"
+                                                        >
+                                                            +
+                                                            {product
+                                                                .product_occasions
+                                                                .length - 2}
+                                                        </Badge>
+                                                    )}
+                                                </div>
                                             ) : (
                                                 <span className="text-muted-foreground">
                                                     -

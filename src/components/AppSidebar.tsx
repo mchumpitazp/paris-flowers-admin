@@ -17,7 +17,7 @@ import {
     Flower,
     BarChart3,
     Package,
-    // ShoppingCart,
+    ShoppingCart,
     // Settings,
     LogOut,
 } from "lucide-react";
@@ -35,11 +35,11 @@ const navigation = [
         url: "/products",
         icon: Package,
     },
-    // {
-    //     title: "Orders",
-    //     url: "/orders",
-    //     icon: ShoppingCart,
-    // },
+    {
+        title: "Заказы",
+        url: "/orders",
+        icon: ShoppingCart,
+    },
     // {
     //     title: "Settings",
     //     url: "/settings",

@@ -11,7 +11,8 @@ export const productEditSchema = z.object({
     name: z.string().min(1, "Name is required"),
     descriptionRu: z.string().optional(),
     price: z.number().optional(),
-    category: z.string().optional(),
+    category: z.string().optional(), // Deprecated - keeping for backward compatibility
+    category_ids: z.array(z.number()).optional(),
     status: z.string().optional(),
     image: z.string().optional(),
     occasion: z.string().optional(),

@@ -16,6 +16,11 @@ export async function getAllProducts(): Promise<ProductWithImages[]> {
                         occasions: true,
                     },
                 },
+                product_categories: {
+                    include: {
+                        categories: true,
+                    },
+                },
             },
             orderBy: {
                 createdAt: "desc",
@@ -43,6 +48,11 @@ export async function getProductById(
                 product_occasions: {
                     include: {
                         occasions: true,
+                    },
+                },
+                product_categories: {
+                    include: {
+                        categories: true,
                     },
                 },
             },
