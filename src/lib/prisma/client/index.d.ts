@@ -7360,7 +7360,7 @@ export namespace Prisma {
     id: number
     slug: string
     label: string
-    image: string
+    image: string | null
     _count: CategoriesCountAggregateOutputType | null
     _avg: CategoriesAvgAggregateOutputType | null
     _sum: CategoriesSumAggregateOutputType | null
@@ -7429,7 +7429,7 @@ export namespace Prisma {
       id: number
       slug: string
       label: string
-      image: string
+      image: string | null
     }, ExtArgs["result"]["categories"]>
     composites: {}
   }
@@ -9937,7 +9937,7 @@ export namespace Prisma {
     id?: IntFilter<"categories"> | number
     slug?: StringFilter<"categories"> | string
     label?: StringFilter<"categories"> | string
-    image?: StringFilter<"categories"> | string
+    image?: StringNullableFilter<"categories"> | string | null
     product_categories?: Product_categoriesListRelationFilter
   }
 
@@ -9945,7 +9945,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     label?: SortOrder
-    image?: SortOrder
+    image?: SortOrderInput | SortOrder
     product_categories?: product_categoriesOrderByRelationAggregateInput
   }
 
@@ -9956,7 +9956,7 @@ export namespace Prisma {
     OR?: categoriesWhereInput[]
     NOT?: categoriesWhereInput | categoriesWhereInput[]
     label?: StringFilter<"categories"> | string
-    image?: StringFilter<"categories"> | string
+    image?: StringNullableFilter<"categories"> | string | null
     product_categories?: Product_categoriesListRelationFilter
   }, "id" | "slug">
 
@@ -9964,7 +9964,7 @@ export namespace Prisma {
     id?: SortOrder
     slug?: SortOrder
     label?: SortOrder
-    image?: SortOrder
+    image?: SortOrderInput | SortOrder
     _count?: categoriesCountOrderByAggregateInput
     _avg?: categoriesAvgOrderByAggregateInput
     _max?: categoriesMaxOrderByAggregateInput
@@ -9979,7 +9979,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"categories"> | number
     slug?: StringWithAggregatesFilter<"categories"> | string
     label?: StringWithAggregatesFilter<"categories"> | string
-    image?: StringWithAggregatesFilter<"categories"> | string
+    image?: StringNullableWithAggregatesFilter<"categories"> | string | null
   }
 
   export type product_categoriesWhereInput = {
@@ -10397,7 +10397,7 @@ export namespace Prisma {
   export type categoriesCreateInput = {
     slug: string
     label: string
-    image: string
+    image?: string | null
     product_categories?: product_categoriesCreateNestedManyWithoutCategoriesInput
   }
 
@@ -10405,14 +10405,14 @@ export namespace Prisma {
     id?: number
     slug: string
     label: string
-    image: string
+    image?: string | null
     product_categories?: product_categoriesUncheckedCreateNestedManyWithoutCategoriesInput
   }
 
   export type categoriesUpdateInput = {
     slug?: StringFieldUpdateOperationsInput | string
     label?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     product_categories?: product_categoriesUpdateManyWithoutCategoriesNestedInput
   }
 
@@ -10420,7 +10420,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     label?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
     product_categories?: product_categoriesUncheckedUpdateManyWithoutCategoriesNestedInput
   }
 
@@ -10428,20 +10428,20 @@ export namespace Prisma {
     id?: number
     slug: string
     label: string
-    image: string
+    image?: string | null
   }
 
   export type categoriesUpdateManyMutationInput = {
     slug?: StringFieldUpdateOperationsInput | string
     label?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type categoriesUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     label?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type product_categoriesCreateInput = {
@@ -12034,14 +12034,14 @@ export namespace Prisma {
   export type categoriesCreateWithoutProduct_categoriesInput = {
     slug: string
     label: string
-    image: string
+    image?: string | null
   }
 
   export type categoriesUncheckedCreateWithoutProduct_categoriesInput = {
     id?: number
     slug: string
     label: string
-    image: string
+    image?: string | null
   }
 
   export type categoriesCreateOrConnectWithoutProduct_categoriesInput = {
@@ -12107,14 +12107,14 @@ export namespace Prisma {
   export type categoriesUpdateWithoutProduct_categoriesInput = {
     slug?: StringFieldUpdateOperationsInput | string
     label?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type categoriesUncheckedUpdateWithoutProduct_categoriesInput = {
     id?: IntFieldUpdateOperationsInput | number
     slug?: StringFieldUpdateOperationsInput | string
     label?: StringFieldUpdateOperationsInput | string
-    image?: StringFieldUpdateOperationsInput | string
+    image?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type productsUpsertWithoutProduct_categoriesInput = {
